@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "89058295400",
+    "project_id": "reviews-classifier",
+    "storage_bucket": "reviews-classifier.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89058295400:android:12e1d3618629e2250045dd",
+        "android_client_info": {
+          "package_name": "com.example.reviewsclassifier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89058295400-64oju89q98lgdhts8j5e4thp3oaouosi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBV2msMRHdRIt-oIGtPVTKqBWWK6gnBIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89058295400-64oju89q98lgdhts8j5e4thp3oaouosi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
