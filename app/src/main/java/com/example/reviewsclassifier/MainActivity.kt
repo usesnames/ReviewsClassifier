@@ -2,6 +2,7 @@ package com.example.reviewsclassifier
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.lastReview.observe(this, Observer{
             findViewById<TextView>(R.id.last_review).text = it
+        })
+
+        viewModel.buttonVisibility.observe(this, Observer{
+            findViewById<Button>(R.id.button).visibility = it
         })
 
         findViewById<Button>(R.id.button).setOnClickListener {

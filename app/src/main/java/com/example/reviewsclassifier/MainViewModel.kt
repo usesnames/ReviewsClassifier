@@ -2,6 +2,7 @@ package com.example.reviewsclassifier
 
 import android.app.Application
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -23,8 +24,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
     //var predictions: MutableList<Float> = mutableListOf()
     var percentuale: MutableLiveData<String> = MutableLiveData("Premi il bottone")
     var lastReview: MutableLiveData<String> = MutableLiveData()
+    var buttonVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
 
     fun getInsight(){
+        buttonVisibility.value = View.INVISIBLE
         viewModelScope.async(Dispatchers.IO) {
             val py = Python.getInstance()
             val scraper = py.getModule("google_play_scraper")
@@ -47,14 +50,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
                     else
                         lastReview.postValue("Ultima review: "+reviews[0]+"\n\nclassificazione: negativa")
                 }
-                percentuale.postValue( "$counter / 100")
+                percentuale.postValue( "avanzamento: $counter / 100")
                 Log.e("", percentuale.value!!)
 
                 if (classifier.classify(element)[0].score < 0.5) {
                     positive += 1
                 }
             }
-            percentuale.postValue("$positive%")
+            percentuale.postValue("$positive% di recensioni positive")
+            buttonVisibility.postValue(View.VISIBLE)
         }
     }
 
