@@ -32,10 +32,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
     var pieReady: MutableLiveData<Boolean> = MutableLiveData(false)
     var pie = AnyChart.pie()
 
+    init{
+        Python.start(AndroidPlatform(context))
+    }
+
     fun getInsight(){
         buttonVisibility.value = View.INVISIBLE
         viewModelScope.async(Dispatchers.IO) {
-            Python.start(AndroidPlatform(context))
             val py = Python.getInstance()
             val scraper = py.getModule("google_play_scraper")
             val result = scraper.callAttr(
