@@ -2,7 +2,6 @@ package com.example.reviewsclassifier
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -23,7 +22,11 @@ class MainActivity : AppCompatActivity() {
         Python.start(AndroidPlatform(this))
 
         viewModel.percentuale.observe(this, Observer{
-            findViewById<TextView>(R.id.textView).text = it
+            findViewById<TextView>(R.id.main_text).text = it
+        })
+
+        viewModel.lastReview.observe(this, Observer{
+            findViewById<TextView>(R.id.last_review).text = it
         })
 
         findViewById<Button>(R.id.button).setOnClickListener {

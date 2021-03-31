@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ReviewsClassifier</string>
+    <string name="launch">LAUNCH</string>
 </resources>

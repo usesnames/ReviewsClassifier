@@ -22,6 +22,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
     private val context = this.getApplication<Application>()
     //var predictions: MutableList<Float> = mutableListOf()
     var percentuale: MutableLiveData<String> = MutableLiveData("Premi il bottone")
+    var lastReview: MutableLiveData<String> = MutableLiveData()
 
     fun getInsight(){
         viewModelScope.async(Dispatchers.IO) {
@@ -29,7 +30,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
             val scraper = py.getModule("google_play_scraper")
             val result = scraper.callAttr("reviews", "com.latuabancaperandroid", Kwarg("count", 100), Kwarg("country", "it"), Kwarg("lang", "it"))
             reviews = result.asList()[0].asList().map { el -> el.asMap()[PyObject.fromJava("content")].toString() }
-            //Log.i("last review", reviews[0])
             startModel()
         }
     }
@@ -41,6 +41,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
             var counter = 0
             for (element: String in reviews) {
                 counter += 1
+                if(counter==1){
+                    if (classifier.classify(element)[0].score < 0.5)
+                        lastReview.postValue("Ultima review: "+reviews[0]+"\n\nclassificazione: positiva")
+                    else
+                        lastReview.postValue("Ultima review: "+reviews[0]+"\n\nclassificazione: negativa")
+                }
                 percentuale.postValue( "$counter / 100")
                 Log.e("", percentuale.value!!)
 
@@ -48,7 +54,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
                     positive += 1
                 }
             }
-            percentuale.value = "$positive%"
+            percentuale.postValue("$positive%")
         }
     }
 
